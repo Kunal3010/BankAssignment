@@ -6,7 +6,7 @@ namespace grahminBank
     class Customer
     {
         public string PhNum { get; set; }
-        public int CID { get; set; }
+        public string CID { get; set; }
         public string FName { get; set; }
         public string LName { get; set; }
         public int Age { get; set; }
@@ -59,7 +59,7 @@ namespace grahminBank
                     Console.WriteLine("Invalid Number!! Enter the number again: ");
                     num = Console.ReadLine();
                 }
-                int cid = Random();
+                string cid = GenerateCustomerId(fname, lname);
                 Console.WriteLine($"Your Customer ID is {cid}");
                 c[i] = new Customer() { PhNum = num, FName = fname, LName = lname, Age =  age, Gender = Gen, State = state, Village = village, Pincode = pcode, DateOfBirth = dateOfBirth, CID= cid };
 
@@ -67,19 +67,20 @@ namespace grahminBank
             Console.WriteLine();
             
         }
-        public int Random()
+        private string GenerateCustomerId(string firstName, string lastName)
         {
-            Random r = new Random();
-            int genRand = r.Next(10, 30);
-            return genRand;
+            Random rand = new Random();
+            int randomNumber = rand.Next(10, 99);
+            string customerId = $"{firstName[0]}{lastName[0]}{randomNumber}";
+            return customerId;
         }
-        public void Showbylname()
+        public void ShowByLname()
         {
             Console.WriteLine("Enter the last name: ");
-            String lname = Console.ReadLine();
+            string lname = Console.ReadLine();
             foreach (Customer customer in c)
             {
-                if (customer.LName == lname)
+                if (customer != null && customer.LName == lname)
                 {
                     Console.WriteLine($" First Name: {customer.FName}\n Last Name: {customer.LName}\n Age: {customer.Age}\n Gender: {customer.Gender}\n Date of Birth: {customer.DateOfBirth}\n Village: {customer.Village}\n State: {customer.State}\n Pincode: {customer.Pincode}\n Phone Number: {customer.PhNum}\n Customer ID: {customer.CID}");
                 }
@@ -91,7 +92,7 @@ namespace grahminBank
             string village = Console.ReadLine();
             foreach( Customer customer in c ) 
             {
-                if(customer.Village == village)
+                if(customer != null && customer.Village == village)
                 {
                     Console.WriteLine($" First Name: {customer.FName}\n Last Name: {customer.LName}\n Age: {customer.Age}\n Gender: {customer.Gender}\n Date of Birth: {customer.DateOfBirth}\n Village: {customer.Village}\n State: {customer.State}\n Pincode: {customer.Pincode}\n Phone Number: {customer.PhNum}\n Customer ID: {customer.CID}");
                 }
@@ -124,7 +125,7 @@ namespace grahminBank
                         }
                         case 2:
                         {
-                            bank.Showbylname(); 
+                            bank.ShowByLname(); 
                             break;
                         }
                         case 3:
